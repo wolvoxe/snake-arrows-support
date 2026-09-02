@@ -91,43 +91,94 @@
     font-size: 13px;
     margin-top: 40px;
   }
+  [data-lang] { display: none; }
+  [data-lang].active { display: block; }
+  span[data-lang].active { display: inline; }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <img src="logo.png" alt="Snake Arrows logo">
-      <p>We're here to help with any questions or feedback.</p>
+      <p data-lang="en" class="active">We're here to help with any questions or feedback.</p>
+      <p data-lang="tr">Sorularınız ve geri bildirimleriniz için buradayız.</p>
     </header>
 
     <div class="card">
-      <h2>Contact Us</h2>
-      <p>For any issues, suggestions, or questions about the app, feel free to email us.</p>
+      <div data-lang="en" class="active">
+        <h2>Contact Us</h2>
+        <p>For any issues, suggestions, or questions about the app, feel free to email us.</p>
+      </div>
+      <div data-lang="tr">
+        <h2>Bize Ulaşın</h2>
+        <p>Uygulamayla ilgili herhangi bir sorun, öneri veya soru için bize e-posta gönderebilirsiniz.</p>
+      </div>
       <a class="btn" href="mailto:cmsengezer@gmail.com">cmsengezer@gmail.com</a>
     </div>
 
     <div class="card">
-      <h2>Frequently Asked Questions</h2>
+      <div data-lang="en" class="active">
+        <h2>Frequently Asked Questions</h2>
 
-      <div class="faq-item">
-        <h3>How do I remove ads?</h3>
-        <p>Go to the "Remove Ads" section inside the app and complete the purchase to enjoy an ad-free experience instantly.</p>
+        <div class="faq-item">
+          <h3>How do I remove ads?</h3>
+          <p>Go to the "Premium" or "Remove Ads" section inside the app and complete the purchase to enjoy an ad-free experience instantly.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How do I restore my purchase?</h3>
+          <p>Tap "Restore Purchases" in the app's Settings menu to restore your previous purchase using the same Apple ID / Google account.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>I want to report a bug or issue, what should I do?</h3>
+          <p>Email us at the address above with a description of the issue and a screenshot if possible. We'll get back to you as soon as we can.</p>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <h3>How do I restore my purchase?</h3>
-        <p>Tap "Restore Purchases" in the app's Settings menu to restore your previous purchase using the same Apple ID / Google account.</p>
-      </div>
+      <div data-lang="tr">
+        <h2>Sıkça Sorulan Sorular</h2>
 
-      <div class="faq-item">
-        <h3>I want to report a bug or issue, what should I do?</h3>
-        <p>Email us at the address above with a description of the issue and a screenshot if possible. We'll get back to you as soon as we can.</p>
+        <div class="faq-item">
+          <h3>Reklamları nasıl kaldırabilirim?</h3>
+          <p>Uygulama içindeki "Premium" veya "Reklamları Kaldır" bölümüne giderek satın alma işlemini tamamla, anında reklamsız deneyime kavuş.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Satın alımımı nasıl geri yükleyebilirim?</h3>
+          <p>Uygulamanın Ayarlar menüsünden "Satın Alımları Geri Yükle" seçeneğine dokunarak, aynı Apple ID / Google hesabıyla önceki satın alımını geri yükleyebilirsin.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Bir hata veya sorun bildirmek istiyorum, ne yapmalıyım?</h3>
+          <p>Yukarıdaki adrese, sorunun açıklaması ve mümkünse bir ekran görüntüsüyle birlikte e-posta gönderebilirsin. En kısa sürede sana dönüş yapacağız.</p>
+        </div>
       </div>
     </div>
 
     <footer>
-      © 2026 Cem Şengezer. All rights reserved.
+      <span data-lang="en" class="active">© 2026 Cem Şengezer. All rights reserved.</span>
+      <span data-lang="tr">© 2026 Cem Şengezer. Tüm hakları saklıdır.</span>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var lang = (params.get('lang') || '').toLowerCase();
+      var resolved = (lang === 'tr') ? 'tr' : 'en'; // default: en (also covers 'en' and empty)
+
+      document.documentElement.setAttribute('lang', resolved);
+
+      var elements = document.querySelectorAll('[data-lang]');
+      elements.forEach(function (el) {
+        if (el.getAttribute('data-lang') === resolved) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
